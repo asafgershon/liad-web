@@ -242,13 +242,12 @@ export default function Home() {
 
                 <Card className="border-[#e8e7e5] relative z-10 h-full hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
-                    <div className="flex flex-col items-center text-center mb-4 gap-3">
-                      <IconComponent className="w-8 h-8 text-[#d4a574]" />
-                      <div className="w-10 h-10 bg-[#d4a574] rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-12 h-12 bg-[#d4a574] rounded-full flex items-center justify-center text-white font-bold text-xl">
                         {item.step}
                       </div>
                     </div>
-                    <CardTitle className="text-[#1e3a5f]">{item.title}</CardTitle>
+                    <CardTitle className="text-[#1e3a5f] text-center">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-[#6b6b6b]">{item.description}</p>
