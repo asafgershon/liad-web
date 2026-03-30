@@ -248,8 +248,8 @@ export default function Home() {
                   <Phone className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-[#1e3a5f] mb-1">טלפון</h3>
-                    <a href="tel:+972123456789" className="text-[#6b6b6b] hover:text-[#d4a574]">
-                      +972-1-234-5678
+                    <a href="tel:+972543453393" className="text-[#6b6b6b] hover:text-[#d4a574]">
+                      +972-54-3453393
                     </a>
                   </div>
                 </div>
@@ -258,8 +258,8 @@ export default function Home() {
                   <Mail className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-[#1e3a5f] mb-1">דוא"ל</h3>
-                    <a href="mailto:info@aviationlaw.co.il" className="text-[#6b6b6b] hover:text-[#d4a574]">
-                      info@aviationlaw.co.il
+                    <a href="mailto:liad@lg-adv.com" className="text-[#6b6b6b] hover:text-[#d4a574]">
+                      liad@lg-adv.com
                     </a>
                   </div>
                 </div>
@@ -269,8 +269,7 @@ export default function Home() {
                   <div>
                     <h3 className="font-semibold text-[#1e3a5f] mb-1">כתובת</h3>
                     <p className="text-[#6b6b6b]">
-                      תל אביב, ישראל<br />
-                      משרדים נוספים בירושלים וחיפה
+                      פרדסיה, ישראל
                     </p>
                   </div>
                 </div>
