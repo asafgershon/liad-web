@@ -147,7 +147,7 @@ export default function Home() {
       </section>
 
       {/* Eligibility Check Section */}
-      <section id="eligibility" className="py-20 bg-[#1e3a5f]">
+      <section id="eligibility" className="py-20 bg-white">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Image - Right Side (RTL) */}
@@ -161,10 +161,10 @@ export default function Home() {
 
             {/* Content - Left Side (RTL) */}
             <div className="order-1 md:order-2 space-y-6">
-              <h2 className="text-4xl font-bold text-white">
+              <h2 className="text-4xl font-bold text-[#1e3a5f]">
                 האם אתה זכאי לפיצוי?
               </h2>
-              <p className="text-lg text-[#e8e7e5]">
+              <p className="text-lg text-[#6b6b6b]">
                 בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין טיסה המבוטלת או המעוכבת
               </p>
 
@@ -178,7 +178,7 @@ export default function Home() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
-                    <span className="text-white">{item}</span>
+                    <span className="text-[#2d2d2d]">{item}</span>
                   </div>
                 ))}
               </div>
