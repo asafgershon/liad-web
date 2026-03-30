@@ -70,7 +70,7 @@ export default function Home() {
                 <span className="text-[#d4a574] font-semibold text-sm">✈️ ייצוג משפטי מקצועי</span>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold text-[#1e3a5f] leading-tight">
-                פיצוי בגין ביטול וביטול טיסה
+                פיצוי בגין עיכוב וביטול טיסה
               </h1>
               <p className="text-lg text-[#6b6b6b] leading-relaxed">
                 אנו מייצגים נוסעים בתביעות כנגד חברות תעופה לקבלת פיצויים בגין ביטול טיסות, עיכובים ושינויים בתנאיי הטיסה. 
