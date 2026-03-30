@@ -427,7 +427,6 @@ export default function Home() {
             <div>
               <h3 className="font-bold text-lg mb-4">עקוב אחרינו</h3>
               <div className="flex gap-4">
-                <a href="#" className="text-[#d4a574] hover:text-white">Facebook</a>
                 <a href="#" className="text-[#d4a574] hover:text-white">LinkedIn</a>
               </div>
             </div>
