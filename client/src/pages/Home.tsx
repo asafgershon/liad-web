@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Phone, Mail, MapPin, ArrowRight, FileText, Clock, DollarSign } from "lucide-react";
+import { CheckCircle2, Phone, Mail, MapPin, ArrowRight, FileText, Clock, DollarSign, FileCheck, Search, Lightbulb, CheckCircle } from "lucide-react";
 import { useState } from "react";
 
 /**
@@ -211,37 +211,39 @@ export default function Home() {
                 step: 1,
                 title: "משאירים פרטים",
                 description: "מלא את טופס יצירת הקשר עם פרטי הטיסה שלך והנסיבות",
-                icon: "📋",
+                Icon: FileText,
               },
               {
                 step: 2,
                 title: "בודקים את המסמכים",
                 description: "אנו בודקים את המסמכים שלך והנסיבות של המקרה בפירוט",
-                icon: "🔍",
+                Icon: Search,
               },
               {
                 step: 3,
                 title: "הערכה ראשונית",
                 description: "מקבלים הערכה ראשונית לגבי המסלול האפשרי והפיצוי הצפוי",
-                icon: "💡",
+                Icon: Lightbulb,
               },
               {
                 step: 4,
                 title: "קידום התביעה",
                 description: "מקדמים את התביעה או הדרישה לפי הצורך עד לקבלת הפיצוי",
-                icon: "✅",
+                Icon: CheckCircle,
               },
-            ].map((item, idx) => (
+            ].map((item, idx) => {
+              const IconComponent = item.Icon;
+              return (
               <div key={idx} className="relative">
                 {/* Connector Line */}
                 {idx < 3 && (
-                  <div className="hidden md:block absolute top-16 right-0 w-full h-1 bg-gradient-to-l from-transparent via-[#d4a574] to-transparent transform -translate-y-1/2"></div>
+                  <div className="hidden md:block absolute top-20 right-0 w-full h-1 bg-gradient-to-l from-transparent via-[#d4a574] to-transparent transform -translate-y-1/2"></div>
                 )}
 
                 <Card className="border-[#e8e7e5] relative z-10 h-full hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-4xl">{item.icon}</div>
+                    <div className="flex flex-col items-center text-center mb-4 gap-3">
+                      <IconComponent className="w-8 h-8 text-[#d4a574]" />
                       <div className="w-10 h-10 bg-[#d4a574] rounded-full flex items-center justify-center text-white font-bold text-lg">
                         {item.step}
                       </div>
@@ -253,7 +255,9 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </div>
-            ))}
+            );
+            })
+            }
           </div>
 
           <div className="mt-12 text-center">
