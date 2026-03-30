@@ -66,9 +66,6 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Text Content - Right Side (RTL) */}
             <div className="space-y-6 order-2 md:order-1">
-              <div className="inline-block px-4 py-2 bg-[#d4a574]/10 rounded-full">
-                <span className="text-[#d4a574] font-semibold text-sm">✈️ ייצוג משפטי מקצועי</span>
-              </div>
               <h1 className="text-5xl md:text-6xl font-bold text-[#1e3a5f] leading-tight">
                 פיצוי בגין עיכוב וביטול טיסה
               </h1>
