@@ -193,6 +193,81 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How the Process Works Section */}
+      <section className="py-20 bg-white border-y border-[#e8e7e5]">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] mb-4">
+              איך התהליך עובד
+            </h2>
+            <p className="text-lg text-[#6b6b6b] max-w-2xl mx-auto">
+              תהליך פשוט וברור בעבור קבלת הפיצוי שלך
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              {
+                step: 1,
+                title: "משאירים פרטים",
+                description: "מלא את טופס יצירת הקשר עם פרטי הטיסה שלך והנסיבות",
+                icon: "📋",
+              },
+              {
+                step: 2,
+                title: "בודקים את המסמכים",
+                description: "אנו בודקים את המסמכים שלך והנסיבות של המקרה בפירוט",
+                icon: "🔍",
+              },
+              {
+                step: 3,
+                title: "הערכה ראשונית",
+                description: "מקבלים הערכה ראשונית לגבי המסלול האפשרי והפיצוי הצפוי",
+                icon: "💡",
+              },
+              {
+                step: 4,
+                title: "קידום התביעה",
+                description: "מקדמים את התביעה או הדרישה לפי הצורך עד לקבלת הפיצוי",
+                icon: "✅",
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="relative">
+                {/* Connector Line */}
+                {idx < 3 && (
+                  <div className="hidden md:block absolute top-16 right-0 w-full h-1 bg-gradient-to-l from-transparent via-[#d4a574] to-transparent transform -translate-y-1/2"></div>
+                )}
+
+                <Card className="border-[#e8e7e5] relative z-10 h-full hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="text-4xl">{item.icon}</div>
+                      <div className="w-10 h-10 bg-[#d4a574] rounded-full flex items-center justify-center text-white font-bold text-lg">
+                        {item.step}
+                      </div>
+                    </div>
+                    <CardTitle className="text-[#1e3a5f]">{item.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[#6b6b6b]">{item.description}</p>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Button
+              size="lg"
+              className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white font-semibold"
+              onClick={() => (window.location.href = "/#contact")}
+            >
+              התחל את התהליך עכשיו <ArrowRight className="mr-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us Section */}
       <section className="py-20 bg-[#1e3a5f] text-white">
         <div className="container">
