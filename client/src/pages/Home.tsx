@@ -147,7 +147,7 @@ export default function Home() {
       </section>
 
       {/* Eligibility Check Section */}
-      <section id="eligibility" className="py-20">
+      <section id="eligibility" className="py-20 bg-[#1e3a5f]">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Image - Right Side (RTL) */}
@@ -161,11 +161,11 @@ export default function Home() {
 
             {/* Content - Left Side (RTL) */}
             <div className="order-1 md:order-2 space-y-6">
-              <h2 className="text-4xl font-bold text-[#1e3a5f]">
+              <h2 className="text-4xl font-bold text-white">
                 האם אתה זכאי לפיצוי?
               </h2>
-              <p className="text-lg text-[#6b6b6b]">
-                בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין טיסתך המבוטלת או המעוכבת
+              <p className="text-lg text-[#e8e7e5]">
+                בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין טיסה המבוטלת או המעוכבת
               </p>
 
               <div className="space-y-4">
@@ -178,7 +178,7 @@ export default function Home() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
-                    <span className="text-[#2d2d2d]">{item}</span>
+                    <span className="text-white">{item}</span>
                   </div>
                 ))}
               </div>
@@ -192,7 +192,7 @@ export default function Home() {
       </section>
 
       {/* How the Process Works Section */}
-      <section className="py-20 bg-white border-y border-[#e8e7e5]">
+      <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] mb-4">
@@ -270,16 +270,16 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20">
+      <section id="contact" className="py-20 bg-[#1e3a5f]">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-4xl font-bold text-[#1e3a5f] mb-4">
+                <h2 className="text-4xl font-bold text-white mb-4">
                   צור קשר איתנו
                 </h2>
-                <p className="text-lg text-[#6b6b6b]">
+                <p className="text-lg text-[#e8e7e5]">
                   אנו כאן כדי לעזור. צור קשר עבור ייעוץ חינם ללא התחייבות
                 </p>
               </div>
@@ -288,8 +288,8 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   <Phone className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-[#1e3a5f] mb-1">טלפון</h3>
-                    <a href="tel:+972543453393" className="text-[#6b6b6b] hover:text-[#d4a574]">
+                    <h3 className="font-semibold text-white mb-1">טלפון</h3>
+                    <a href="tel:+972543453393" className="text-[#e8e7e5] hover:text-[#d4a574]">
                       +972-54-3453393
                     </a>
                   </div>
@@ -298,8 +298,8 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   <Mail className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-[#1e3a5f] mb-1">דוא"ל</h3>
-                    <a href="mailto:liad@lg-adv.com" className="text-[#6b6b6b] hover:text-[#d4a574]">
+                    <h3 className="font-semibold text-white mb-1">דוא"l</h3>
+                    <a href="mailto:liad@lg-adv.com" className="text-[#e8e7e5] hover:text-[#d4a574]">
                       liad@lg-adv.com
                     </a>
                   </div>
@@ -308,8 +308,8 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   <MapPin className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-[#1e3a5f] mb-1">כתובת</h3>
-                    <p className="text-[#6b6b6b]">
+                    <h3 className="font-semibold text-white mb-1">כתובת</h3>
+                    <p className="text-[#e8e7e5]">
                       פרדסיה, ישראל
                     </p>
                   </div>
