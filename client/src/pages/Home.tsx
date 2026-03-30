@@ -271,41 +271,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-20 bg-[#1e3a5f] text-white">
-        <div className="container">
-          <h2 className="text-4xl font-bold text-center mb-16">
-            למה לבחור בנו?
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                number: "15+",
-                title: "שנות ניסיון",
-                description: "ניסיון עשיר בדיני תעופה וזכויות נוסעים",
-              },
-              {
-                number: "98%",
-                title: "שיעור הצלחה",
-                description: "רוב התביעות שלנו מסתיימות בהצלחה",
-              },
-              {
-                number: "€600K+",
-                title: "פיצויים שהושגו",
-                description: "סכום כולל של פיצויים שהשגנו לקליינטים",
-              },
-            ].map((stat, idx) => (
-              <div key={idx} className="text-center">
-                <div className="text-5xl font-bold text-[#d4a574] mb-2">{stat.number}</div>
-                <h3 className="text-xl font-semibold mb-2">{stat.title}</h3>
-                <p className="text-[#e8e7e5]">{stat.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-20">
         <div className="container">
