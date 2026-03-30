@@ -298,7 +298,7 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   <Mail className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-white mb-1">דוא"l</h3>
+                    <h3 className="font-semibold text-white mb-1">דוא"ל</h3>
                     <a href="mailto:liad@lg-adv.com" className="text-[#e8e7e5] hover:text-[#d4a574]">
                       liad@lg-adv.com
                     </a>
