@@ -43,39 +43,44 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* Aviation Law Professional Color Palette */
+  --primary: #1e3a5f; /* Deep Navy Blue */
+  --primary-foreground: #f9f8f6; /* Off-white */
+  --accent: #d4a574; /* Warm Gold */
+  --accent-foreground: #1e3a5f; /* Navy on gold */
+  --secondary: #8b9d83; /* Soft Sage Green */
+  --secondary-foreground: #f9f8f6;
+  --sidebar-primary: #1e3a5f;
+  --sidebar-primary-foreground: #f9f8f6;
+  --chart-1: #d4a574;
+  --chart-2: #1e3a5f;
+  --chart-3: #8b9d83;
+  --chart-4: #2d5a8c;
+  --chart-5: #a67c52;
+  --radius: 0.5rem;
+  --background: #f9f8f6; /* Off-white background */
+  --foreground: #2d2d2d; /* Charcoal text */
+  --card: #ffffff;
+  --card-foreground: #2d2d2d;
+  --popover: #ffffff;
+  --popover-foreground: #2d2d2d;
+  --secondary: #8b9d83;
+  --secondary-foreground: #f9f8f6;
+  --muted: #e8e7e5;
+  --muted-foreground: #6b6b6b;
+  --accent: #d4a574;
+  --accent-foreground: #1e3a5f;
+  --destructive: #d32f2f;
+  --destructive-foreground: #ffffff;
+  --border: #e8e7e5;
+  --input: #ffffff;
+  --ring: #d4a574;
+  --sidebar: #f9f8f6;
+  --sidebar-foreground: #2d2d2d;
+  --sidebar-accent: #d4a574;
+  --sidebar-accent-foreground: #1e3a5f;
+  --sidebar-border: #e8e7e5;
+  --sidebar-ring: #d4a574;
 }
 
 .dark {
@@ -117,8 +122,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    direction: rtl;
+    font-family: 'Noto Sans Hebrew', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Sans Hebrew', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
