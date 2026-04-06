@@ -191,6 +191,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Baggage Compensation Section */}
+      <section className="py-20 bg-[#1e3a5f]">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Content - Right Side (RTL) */}
+            <div className="order-1 md:order-2 space-y-6">
+              <h2 className="text-4xl font-bold text-white">
+                פיצוי בגין בעיות כבודה
+              </h2>
+              <p className="text-lg text-[#e8e7e5]">
+                בנוסף לפיצויים בגין ביטול וביטול טיסות, אתה זכאי לפיצוי גם בגין בעיות בכבודה שלך
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "איחור בהגעת כבודה",
+                    description: "כבודה שהגיעה מאוחר מהנדרש - עד €400 לטיסה"
+                  },
+                  {
+                    title: "נזק לכבודה",
+                    description: "כבודה שנפגעה או ניזוקה במהלך הטיסה - עד €1,200"
+                  },
+                  {
+                    title: "אבדן מלא של כבודה",
+                    description: "כבודה שלא הגיעה בכלל - עד €1,200 לטיסה"
+                  },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4 bg-[#2d5a8c] p-4 rounded-lg">
+                    <div className="w-8 h-8 bg-[#d4a574] rounded-full flex items-center justify-center text-[#1e3a5f] font-bold flex-shrink-0 mt-1">
+                      ✓
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                      <p className="text-[#e8e7e5] text-sm">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Button size="lg" className="bg-[#d4a574] hover:bg-[#a67c52] text-[#1e3a5f] font-semibold mt-6" onClick={() => window.location.href = '#contact'}>
+                השאר פרטים עכשיו
+              </Button>
+            </div>
+
+            {/* Image - Left Side (RTL) */}
+            <div className="order-2 md:order-1">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663495399229/g4QTWcVJ3dJiuK9ACQdg8n/happy-passenger-compensation-UR6mEoVweYZmzJGQqKs3LL.webp"
+                alt="Baggage Compensation"
+                className="w-full h-auto rounded-2xl shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How the Process Works Section */}
       <section className="py-20 bg-white">
         <div className="container">
