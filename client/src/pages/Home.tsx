@@ -290,7 +290,7 @@ export default function Home() {
                   <div>
                     <h3 className="font-semibold text-white mb-1">טלפון</h3>
                     <a href="tel:+972543453393" className="text-[#e8e7e5] hover:text-[#d4a574]">
-                      +972-54-3453393
+                      054-3453393
                     </a>
                   </div>
                 </div>
