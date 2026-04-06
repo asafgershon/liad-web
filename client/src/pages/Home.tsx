@@ -304,16 +304,6 @@ export default function Home() {
                     </a>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <MapPin className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">כתובת</h3>
-                    <p className="text-[#e8e7e5]">
-                      פרדסיה, ישראל
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
 
