@@ -23,6 +23,7 @@ export default function EligibilityChecker() {
     cancellationReason: "",
     flightType: "domestic", // domestic or international
     hasCompensation: false,
+    previousCompensation: "",
   });
 
   const [result, setResult] = useState<EligibilityResult | null>(null);
@@ -233,6 +234,22 @@ export default function EligibilityChecker() {
                     </label>
                   </div>
 
+                  {formData.hasCompensation && (
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
+                        סכום הפיצוי שקיבלתי (ב€)
+                      </label>
+                      <input
+                        type="number"
+                        name="previousCompensation"
+                        value={formData.previousCompensation}
+                        onChange={handleInputChange}
+                        placeholder="הכנס את הסכום שקיבלתי"
+                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
+                      />
+                    </div>
+                  )}
+
                   <Button
                     type="submit"
                     className="w-full bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white font-semibold py-2 mt-6"
@@ -375,7 +392,7 @@ export default function EligibilityChecker() {
               </CardHeader>
               <CardContent className="text-[#6b6b6b]">
                 <p className="text-sm">
-                  בדרך כלל יש 3 שנים מתאריך הטיסה להגשת תביעה
+                  לפי החוק בישראל קיימת התיישנות של 4 שנים ממועד הטיסה ועד למועד הגשת התביעה
                 </p>
               </CardContent>
             </Card>
