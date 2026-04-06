@@ -75,10 +75,10 @@ export default function Home() {
                 עם ניסיון של שנים בדיני תעופה, אנו מבטיחים את זכויותיך.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white text-base" onClick={() => window.location.href = '/eligibility'}>
+                <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white text-base" onClick={() => window.location.href = '#contact'}>
                   בדוק את הזכאות שלך <ArrowRight className="mr-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-[#d4a574] text-[#1e3a5f] hover:bg-[#d4a574]/5">
+                <Button size="lg" variant="outline" className="border-[#d4a574] text-[#1e3a5f] hover:bg-[#d4a574]/5" onClick={() => window.location.href = '#contact'}>
                   צור קשר עכשיו
                 </Button>
               </div>
@@ -327,7 +327,7 @@ export default function Home() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="הכנס את שמך"
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
                       required
                     />
                   </div>
@@ -342,7 +342,21 @@ export default function Home() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="הכנס את מספר הטלפון שלך"
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
+                      הערות
+                    </label>
+                    <textarea
+                      name="flightDetails"
+                      value={formData.flightDetails}
+                      onChange={handleInputChange}
+                      placeholder="דציבו את פרטי הטיסה שלך"
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] min-h-32 text-right"
                       required
                     />
                   </div>
@@ -356,8 +370,8 @@ export default function Home() {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="הכנס את כתובת הדוא'ל שלך"
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
+                      placeholder="הכנס את כתובת הדוא'l שלך"
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
                       required
                     />
                   </div>
