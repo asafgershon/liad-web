@@ -41,7 +41,7 @@ export default function Home() {
             <div className="w-10 h-10 bg-[#1e3a5f] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">⚖️</span>
             </div>
-            <h1 className="text-xl font-bold text-[#1e3a5f]">עורך דין תביעות תעופה</h1>
+            <h1 className="text-xl font-bold text-[#1e3a5f]">ליעד גרשון עו"ד (רו"ח)</h1>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <a href="#services" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
@@ -53,7 +53,7 @@ export default function Home() {
             <a href="#contact" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
               צור קשר
             </a>
-            <Button className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white">
+            <Button className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white" onClick={() => window.location.href = '#contact'}>
               קבל ייעוץ חינם
             </Button>
           </nav>
