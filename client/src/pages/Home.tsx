@@ -196,7 +196,7 @@ export default function Home() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Content - Right Side (RTL) */}
-            <div className="order-1 md:order-2 space-y-6">
+            <div className="order-1 md:order-1 space-y-6">
               <h2 className="text-4xl font-bold text-white">
                 פיצוי בגין בעיות כבודה
               </h2>
@@ -237,9 +237,9 @@ export default function Home() {
             </div>
 
             {/* Image - Left Side (RTL) */}
-            <div className="order-2 md:order-1">
+            <div className="order-2 md:order-2">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663495399229/g4QTWcVJ3dJiuK9ACQdg8n/happy-passenger-compensation-UR6mEoVweYZmzJGQqKs3LL.webp"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663495399229/g4QTWcVJ3dJiuK9ACQdg8n/baggage-trolley-luggage-RDAkcj4KKHzhuw5YTG7WiK.webp"
                 alt="Baggage Compensation"
                 className="w-full h-auto rounded-2xl shadow-xl"
               />
