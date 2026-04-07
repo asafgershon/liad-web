@@ -162,10 +162,10 @@ export default function Home() {
             {/* Content - Left Side (RTL) */}
             <div className="order-1 md:order-2 space-y-6">
               <h2 className="text-4xl font-bold text-[#1e3a5f]">
-                האם אתה זכאי לפיצוי?
+                האם אתה זכאי לפיצוי בגין שינוי בתנאי הטיסה?
               </h2>
               <p className="text-lg text-[#6b6b6b]">
-                בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין טיסה המבוטלת או המעוכבת
+                בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין עיכוב או ביטול של טיסתך?
               </p>
 
               <div className="space-y-4">
