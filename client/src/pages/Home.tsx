@@ -67,8 +67,7 @@ export default function Home() {
             {/* Text Content - Right Side (RTL) */}
             <div className="space-y-6 order-2 md:order-1">
               <h1 className="text-5xl md:text-6xl font-bold text-[#1e3a5f] leading-tight">
-                מומחים בתביעות
-תעופה ונוסעים
+                מימוש זכויות נוסעים מול חברות תעופה
               </h1>
               <p className="text-lg text-[#6b6b6b] leading-relaxed">
                 אנו מייצגים נוסעים בתביעות כנגד חברות תעופה לקבלת פיצויים בגין ביטול טיסות, עיכובים ושינויים בתנאיי הטיסה. 
