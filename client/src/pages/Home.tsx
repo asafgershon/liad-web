@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Phone, Mail, MapPin, ArrowRight, FileText, Clock, DollarSign, FileCheck, Search, Lightbulb, CheckCircle } from "lucide-react";
+import { CheckCircle2, Phone, Mail, MapPin, ArrowRight, FileText, Clock, DollarSign, FileCheck, Search, Lightbulb, CheckCircle, Luggage } from "lucide-react";
 import { useState } from "react";
 
 /**
@@ -116,18 +116,18 @@ export default function Home() {
             {[
               {
                 icon: <FileText className="w-8 h-8" />,
-                title: "תביעות ביטול טיסה",
+                title: "ביטול טיסה",
                 description: "ייצוג בתביעות נגד חברות תעופה בגין ביטול טיסות בהתאם לחוק שירותי תעופה",
               },
               {
                 icon: <Clock className="w-8 h-8" />,
-                title: "תביעות עיכוב",
+                title: "עיכוב טיסה",
                 description: "קבלת פיצויים בגין עיכוב טיסה העולה על 3 שעות לפי התקנות האירופיות",
               },
               {
-                icon: <DollarSign className="w-8 h-8" />,
-                title: "פיצויים מלאים",
-                description: "הבטחת קבלת הפיצוי המלא שלך - עד €600 לנוסע בהתאם לחוק",
+                icon: <Luggage className="w-8 h-8" />,
+                title: "בעיות כבודה",
+                description: "פיצויים בגין נזק, איחור או אבדן כבודה - עד €1,200 לנוסע",
               },
             ].map((service, idx) => (
               <Card key={idx} className="border-[#e8e7e5] hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1">
