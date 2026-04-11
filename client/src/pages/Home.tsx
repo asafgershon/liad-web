@@ -113,17 +113,17 @@ export default function Home() {
               {
                 icon: <FileText className="w-8 h-8" />,
                 title: "ביטול טיסה",
-                description: "ייצוג בתביעות נגד חברות תעופה בגין ביטול טיסות בהתאם לחוק שירותי תעופה",
+                description: "טיסה בוטלה? ייתכן שמגיע לכם פיצוי כספי מחברת התעופה – אנו נדאג למימוש הזכויות עבורכם",
               },
               {
                 icon: <Clock className="w-8 h-8" />,
                 title: "עיכוב טיסה",
-                description: "קבלת פיצויים בגין עיכוב טיסה העולה על 3 שעות לפי התקנות האירופיות",
+                description: "טיסה התעכבה מעל שעתיים? ייתכן שמגיע לכם פיצוי או שירותי סיוע",
               },
               {
                 icon: <Luggage className="w-8 h-8" />,
                 title: "בעיות כבודה",
-                description: "פיצויים בגין נזק, איחור או אבדן כבודה - עד €1,200 לנוסע",
+                description: "המזוודה לא הגיעה, ניזוקה או התעכבה? ייתכן שמגיע לכם פיצוי",
               },
             ].map((service, idx) => (
               <Card key={idx} className="border-[#e8e7e5] hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1">
