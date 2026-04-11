@@ -158,19 +158,19 @@ export default function Home() {
             {/* Content - Left Side (RTL) */}
             <div className="order-1 md:order-2 space-y-6">
               <h2 className="text-4xl font-bold text-[#1e3a5f]">
-                האם אתה זכאי לפיצוי בגין שינוי בתנאי הטיסה?
+                האם מגיע לכם פיצוי מחברת התעופה?
               </h2>
               <p className="text-lg text-[#6b6b6b]">
-                בדוק אם אתה עומד בתנאים לקבלת פיצוי בגין עיכוב או ביטול של טיסתך?
+                בדקו עכשיו זכאות לפיצוי בגין עיכוב, ביטול או שינוי בתנאי הטיסה:
               </p>
 
               <div className="space-y-4">
                 {[
-                  "ביטול טיסה פחות מ-14 יום לפני מועד הטיסה",
+                  "ביטול טיסה פחות מ-14 יום לפני מועד ההמראה",
                   "עיכוב טיסה העולה על שעתיים",
-                  "שינוי בתנאיי הטיסה ללא הסכמתך",
+                  "שינוי בתנאיי הטיסה ללא הסכמתכם",
                   "סירוב עלייה למטוס (overbooking)",
-                  "הפסד חיבור בגלל טיסה מעוכבת",
+                  "הפסד טיסת המשך עקב עיכוב",
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-[#d4a574] flex-shrink-0 mt-1" />
