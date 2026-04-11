@@ -113,7 +113,7 @@ export default function Home() {
               {
                 icon: <FileText className="w-8 h-8" />,
                 title: "ביטול טיסה",
-                description: "טיסה בוטלה? ייתכן שמגיע לכם פיצוי כספי מחברת התעופה – אנו נדאג למימוש הזכויות עבורכם",
+                description: "טיסה בוטלה? ייתכן שמגיע לכם פיצוי כספי מחברת התעופה",
               },
               {
                 icon: <Clock className="w-8 h-8" />,
