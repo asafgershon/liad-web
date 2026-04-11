@@ -310,15 +310,7 @@ export default function Home() {
             }
           </div>
 
-          <div className="mt-12 text-center">
-            <Button
-              size="lg"
-              className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white font-semibold"
-              onClick={() => (window.location.href = "/#contact")}
-            >
-              התחל את התהליך עכשיו <ArrowRight className="mr-2 h-5 w-5" />
-            </Button>
-          </div>
+
         </div>
       </section>
 
