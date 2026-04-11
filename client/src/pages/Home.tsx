@@ -50,11 +50,8 @@ export default function Home() {
             <a href="#eligibility" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
               בדיקת זכאות
             </a>
-            <a href="#contact" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
-              צור קשר
-            </a>
             <Button className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white" onClick={() => window.location.href = '#contact'}>
-              קבל ייעוץ חינם
+              צור קשר
             </Button>
           </nav>
         </div>
