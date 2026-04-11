@@ -402,20 +402,6 @@ export default function Home() {
 
                   <div>
                     <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      הערות
-                    </label>
-                    <textarea
-                      name="flightDetails"
-                      value={formData.flightDetails}
-                      onChange={handleInputChange}
-                      placeholder="דציבו את פרטי הטיסה שלך"
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] min-h-32 text-right"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
                       דוא&apos;ל
                     </label>
                     <input
@@ -423,7 +409,7 @@ export default function Home() {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="הכנס את כתובת הדוא'l שלך"
+                      placeholder="הכנס את כתובת הדוא'ל שלך"
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
                       required
                     />
@@ -431,13 +417,13 @@ export default function Home() {
 
                   <div>
                     <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      פרטי הטיסה
+                      פרטי הטיסה והערות
                     </label>
                     <textarea
                       name="flightDetails"
                       value={formData.flightDetails}
                       onChange={handleInputChange}
-                      placeholder="תאר את המצב שלך..."
+                      placeholder="הכנס את פרטי הטיסה שלך והערות נוספות אודות המקרה..."
                       rows={4}
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
                     />
