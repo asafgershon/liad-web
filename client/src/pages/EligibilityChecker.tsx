@@ -362,42 +362,7 @@ export default function EligibilityChecker() {
             </div>
           </div>
 
-          {/* Info Section */}
-          <div className="mt-16 grid md:grid-cols-3 gap-8">
-            <Card className="border-[#e8e7e5]">
-              <CardHeader>
-                <CardTitle className="text-[#1e3a5f] text-lg">🛫 טיסה בינלאומית</CardTitle>
-              </CardHeader>
-              <CardContent className="text-[#6b6b6b]">
-                <p className="text-sm">
-                  טיסה בינלאומית שהתעכבה או בוטלה? ייתכן שמגיע לכם פיצוי של עד אלפי שקלים
-                </p>
-              </CardContent>
-            </Card>
 
-            <Card className="border-[#e8e7e5]">
-              <CardHeader>
-                <CardTitle className="text-[#1e3a5f] text-lg">🏠 טיסה דומסטית</CardTitle>
-              </CardHeader>
-              <CardContent className="text-[#6b6b6b]">
-                <p className="text-sm">
-                  טיסה פנים־ארצית שהתעכבה או בוטלה? גם כאן ייתכן שמגיע לכם פיצוי לפי החוק
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-[#e8e7e5]">
-              <CardHeader>
-                <CardTitle className="text-[#1e3a5f] text-lg">⏱️ זמן תגובה</CardTitle>
-              </CardHeader>
-              <CardContent className="text-[#6b6b6b]">
-                <p className="text-sm">
-                  ניתן להגיש תביעה עד 4 שנים ממועד הטיסה. 
-אל תחכו, ייתכן שמגיע לכם פיצוי כבר עכשיו
-                </p>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
 
