@@ -183,14 +183,14 @@ export default function EligibilityChecker() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
                     >
-                      <option value="domestic">טיסה דומסטית (בתוך ישראל)</option>
-                      <option value="international">טיסה בינלאומית</option>
+                      <option value="domestic">טיסה פנימית (בתוך ישראל)</option>
+                      <option value="international" selected>טיסה בינלאומית</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      שעות עיכוב (אם היתה)
+                      שעות עיכוב (אם היה)
                     </label>
                     <input
                       type="number"
