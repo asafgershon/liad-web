@@ -214,9 +214,9 @@ export default function EligibilityChecker() {
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
                     >
                       <option value="none">בחר אפשרות</option>
-                      <option value="cancelled">כן, הטיסה בוטלה ולא טסתי כלל</option>
-                      <option value="delayed">לא, הטיסה לא בוטלה, אבל טסתי באיחור</option>
-                      <option value="late_departure">לא, הטיסה המריאה באיחור, אבל לא טסתי</option>
+                      <option value="cancelled">הטיסה בוטלה, ולא טסתי כלל</option>
+                      <option value="delayed">הטיסה המריאה באיחור, אבל כן טסתי</option>
+                      <option value="late_departure">הטיסה המריאה באיחור, אבל לא טסתי</option>
                     </select>
                   </div>
 
