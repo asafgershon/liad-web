@@ -48,7 +48,10 @@ export default function Home() {
               שירותים
             </a>
             <a href="#eligibility" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
-              בדיקת זכאות
+              ביטול טיסה
+            </a>
+            <a href="#baggage" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
+              בעיות כבודה
             </a>
             <Button className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white" onClick={() => window.location.href = '#contact'}>
               צור קשר
@@ -74,9 +77,7 @@ export default function Home() {
                 <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white text-base" onClick={() => window.location.href = '/eligibility'}>
                   בדוק את הזכאות שלך <ArrowRight className="mr-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-[#d4a574] text-[#1e3a5f] hover:bg-[#d4a574]/5" onClick={() => window.location.href = '#contact'}>
-                  צור קשר עכשיו
-                </Button>
+
               </div>
             </div>
 
