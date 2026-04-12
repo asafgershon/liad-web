@@ -189,7 +189,7 @@ export default function Home() {
       </section>
 
       {/* Baggage Compensation Section */}
-      <section className="py-20 bg-[#1e3a5f]">
+      <section id="baggage" className="py-20 bg-[#1e3a5f]">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Content - Right Side (RTL) */}
