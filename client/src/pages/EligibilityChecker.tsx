@@ -370,7 +370,7 @@ export default function EligibilityChecker() {
               </CardHeader>
               <CardContent className="text-[#6b6b6b]">
                 <p className="text-sm">
-                  טיסות בינלאומיות מכוסות בתקנות האירופיות (EC 261/2004) ופיצוי עד €600
+                  טיסה בינלאומית שהתעכבה או בוטלה? ייתכן שמגיע לכם פיצוי של עד אלפי שקלים
                 </p>
               </CardContent>
             </Card>
@@ -381,7 +381,7 @@ export default function EligibilityChecker() {
               </CardHeader>
               <CardContent className="text-[#6b6b6b]">
                 <p className="text-sm">
-                  טיסות דומסטיות בישראל מכוסות בחוק שירותי התעופה הישראלי
+                  טיסה פנים־ארצית שהתעכבה או בוטלה? גם כאן ייתכן שמגיע לכם פיצוי לפי החוק
                 </p>
               </CardContent>
             </Card>
@@ -392,7 +392,8 @@ export default function EligibilityChecker() {
               </CardHeader>
               <CardContent className="text-[#6b6b6b]">
                 <p className="text-sm">
-                  לפי החוק בישראל קיימת התיישנות של 4 שנים ממועד הטיסה ועד למועד הגשת התביעה
+                  ניתן להגיש תביעה עד 4 שנים ממועד הטיסה. 
+אל תחכו, ייתכן שמגיע לכם פיצוי כבר עכשיו
                 </p>
               </CardContent>
             </Card>
