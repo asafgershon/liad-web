@@ -6,22 +6,32 @@ import { useState } from "react";
 /**
  * Design Philosophy: Modern Legal Professionalism with Warmth
  * Interactive eligibility checker for aviation compensation claims
+ * Compliant with Israeli Aviation Services Law (חוק שירותי תעופה תשע"ב-2012)
  * Provides immediate feedback on claim eligibility based on flight details
  */
 
 interface EligibilityResult {
   eligible: boolean;
-  compensation: number;
+  compensationRange: [number, number] | null;
   reasons: string[];
   conditions: string[];
+  delayCategory: "2-5" | "5-8" | "8plus" | "none";
 }
+
+const COMPENSATION_BY_DESTINATION = {
+  europe: { min: 1530, max: 2450 },
+  americas: { min: 2450, max: 3670 },
+  asia: { min: 2450, max: 3670 },
+  africa: { min: 1530, max: 2450 },
+  oceania: { min: 3670, max: 3670 },
+};
 
 export default function EligibilityChecker() {
   const [formData, setFormData] = useState({
     flightDate: "",
     delayHours: "",
-    cancellationReason: "",
-    flightType: "international", // domestic or international
+    cancellationReason: "none",
+    flightDestination: "europe",
     hasCompensation: false,
     previousCompensation: "",
   });
@@ -43,11 +53,13 @@ export default function EligibilityChecker() {
 
     const delayHours = parseInt(formData.delayHours) || 0;
     const flightDate = new Date(formData.flightDate);
-    const isInternational = formData.flightType === "international";
+    const destination = formData.flightDestination as keyof typeof COMPENSATION_BY_DESTINATION;
     const hasAlreadyCompensation = formData.hasCompensation;
+    const cancellationReason = formData.cancellationReason;
 
     let eligible = false;
-    let compensation = 0;
+    let compensationRange: [number, number] | null = null;
+    let delayCategory: "2-5" | "5-8" | "8plus" | "none" = "none";
     const reasons: string[] = [];
     const conditions: string[] = [];
 
@@ -56,60 +68,63 @@ export default function EligibilityChecker() {
       conditions.push("⚠️ בדיקה זו עבור טיסות שכבר התרחשו");
     }
 
-    // Delay eligibility
-    if (delayHours >= 3) {
+    // Determine delay category and eligibility
+    if (delayHours >= 2 && delayHours < 5) {
+      delayCategory = "2-5";
       eligible = true;
-      reasons.push("עיכוב של 3 שעות או יותר");
-
-      if (isInternational) {
-        if (delayHours >= 3 && delayHours < 4) compensation = 250;
-        else if (delayHours >= 4) compensation = 400;
-      } else {
-        compensation = 0; // Israeli domestic flights have different rules
-        reasons.push("טיסה דומסטית - בדוק את חוק שירותי התעופה הישראלי");
-      }
+      reasons.push("עיכוב של 2-5 שעות");
+      conditions.push("✅ אתם זכאים לשירותי סיוע (מזון, משקאות, תקשורת)");
+      conditions.push("💡 אם לא קיבלתם את השירותים הללו, כדאי ליצור קשר איתנו כדי לבדוק את זכויותיכם");
+    } else if (delayHours >= 5 && delayHours < 8) {
+      delayCategory = "5-8";
+      eligible = true;
+      reasons.push("עיכוב של 5-8 שעות");
+      conditions.push("✅ אתם זכאים ל:");
+      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
+      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
+      conditions.push("💡 אם לא קיבלתם את זכויותיכם, כדאי ליצור קשר איתנו");
+    } else if (delayHours >= 8) {
+      delayCategory = "8plus";
+      eligible = true;
+      reasons.push("עיכוב של 8 שעות או יותר (נחשב ביטול טיסה)");
+      const comp = COMPENSATION_BY_DESTINATION[destination];
+      compensationRange = [comp.min, comp.max];
+      conditions.push("✅ אתם זכאים ל:");
+      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
+      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
+      conditions.push(`  • פיצוי כספי בטווח של ₪${compensationRange[0].toLocaleString('he-IL')}-₪${compensationRange[1].toLocaleString('he-IL')}`);
     }
 
     // Cancellation eligibility
-    if (formData.cancellationReason && formData.cancellationReason !== "none") {
+    if (cancellationReason === "cancelled") {
       eligible = true;
+      delayCategory = "8plus";
       reasons.push("ביטול טיסה");
-
-      if (formData.cancellationReason === "airline") {
-        if (isInternational) {
-          compensation = 600;
-          reasons.push("ביטול בגלל סיבה של חברת התעופה");
-        } else {
-          compensation = 0;
-          reasons.push("טיסה דומסטית - בדוק את חוק שירותי התעופה הישראלי");
-        }
-      } else if (formData.cancellationReason === "extraordinary") {
-        eligible = false;
-        reasons.push("ביטול בגלל נסיבות חריגות - אולי לא זכאי לפיצוי");
-      }
+      const comp = COMPENSATION_BY_DESTINATION[destination];
+      compensationRange = [comp.min, comp.max];
+      conditions.push("✅ אתם זכאים ל:");
+      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
+      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
+      conditions.push(`  • פיצוי כספי בטווח של ₪${compensationRange[0].toLocaleString('he-IL')}-₪${compensationRange[1].toLocaleString('he-IL')}`);
     }
 
     // Already received compensation
-    if (hasAlreadyCompensation) {
-      eligible = false;
-      reasons.push("כבר קיבלת פיצוי - לא ניתן להגיש תביעה נוספת");
+    if (hasAlreadyCompensation && (compensationRange || delayCategory === "5-8" || delayCategory === "2-5")) {
+      conditions.push("📌 אם קיבלתם כבר פיצוי, הסכום הסופי שמגיע לכם יהיה **בניכוי הפיצוי שכבר התקבל**");
     }
 
-    // Add conditions
-    if (eligible && compensation > 0) {
-      conditions.push("✅ אתה כנראה זכאי לפיצוי");
-      conditions.push(`💰 סכום פיצוי משוער: €${compensation}`);
-      conditions.push("📋 צור קשר איתנו לאישור סופי ותחילת התהליך");
-    } else if (!eligible) {
-      conditions.push("❌ לפי הנתונים שלך, אתה אולי לא זכאי לפיצוי");
+    // No eligibility
+    if (!eligible) {
+      conditions.push("❌ על פי הנתונים שלך, אתה אולי לא זכאי לפיצוי");
       conditions.push("💡 עם זאת, כל מקרה הוא ייחודי - צור קשר לייעוץ חינם");
     }
 
     setResult({
       eligible,
-      compensation,
+      compensationRange,
       reasons,
       conditions,
+      delayCategory,
     });
 
     setTimeout(() => setShowResult(true), 300);
@@ -144,7 +159,7 @@ export default function EligibilityChecker() {
               בדוק את הזכאות שלך לפיצוי
             </h1>
             <p className="text-lg text-[#6b6b6b]">
-              מלא את פרטי הטיסה שלך וקבל תשובה מיידית אם אתה זכאי לפיצוי
+              מלא את פרטי הטיסה שלך וקבל תשובה מיידית אם אתה זכאי לפיצוי לפי חוק שירותי התעופה הישראלי
             </p>
           </div>
 
@@ -175,16 +190,19 @@ export default function EligibilityChecker() {
 
                   <div>
                     <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      סוג הטיסה
+                      לאן הטיסה הייתה?
                     </label>
                     <select
-                      name="flightType"
-                      value={formData.flightType}
+                      name="flightDestination"
+                      value={formData.flightDestination}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
                     >
-                      <option value="domestic">טיסה פנימית (בתוך ישראל)</option>
-                      <option value="international">טיסה בינלאומית</option>
+                      <option value="europe">אירופה</option>
+                      <option value="americas">אמריקה (צפון ודרום)</option>
+                      <option value="asia">אסיה</option>
+                      <option value="africa">אפריקה</option>
+                      <option value="oceania">אוקיאניה</option>
                     </select>
                   </div>
 
@@ -237,7 +255,7 @@ export default function EligibilityChecker() {
                   {formData.hasCompensation && (
                     <div className="mt-4">
                       <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                        סכום הפיצוי שקיבלתי (ב€)
+                        סכום הפיצוי שקיבלתי (בשקלים חדשים)
                       </label>
                       <input
                         type="number"
@@ -285,14 +303,14 @@ export default function EligibilityChecker() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      {result.compensation > 0 && (
-                        <div className="text-3xl font-bold text-[#1e3a5f] mb-2">
-                          €{result.compensation}
+                      {result.compensationRange && (
+                        <div className="text-2xl font-bold text-[#1e3a5f] mb-2">
+                          ₪{result.compensationRange[0].toLocaleString('he-IL')}-₪{result.compensationRange[1].toLocaleString('he-IL')}
                         </div>
                       )}
                       <p className="text-[#6b6b6b]">
                         {result.eligible
-                          ? "על פי הנתונים שלך, אתה זכאי לפיצוי"
+                          ? "על פי הנתונים שלך, אתה זכאי לפיצוי או שירותי סיוע"
                           : "אנא צור קשר לייעוץ חינם"}
                       </p>
                     </CardContent>
@@ -326,7 +344,7 @@ export default function EligibilityChecker() {
                       <CardContent>
                         <ul className="space-y-2">
                           {result.conditions.map((condition, idx) => (
-                            <li key={idx} className="text-[#e8e7e5]">
+                            <li key={idx} className="text-[#e8e7e5] whitespace-pre-wrap">
                               {condition}
                             </li>
                           ))}
