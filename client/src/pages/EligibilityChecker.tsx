@@ -357,7 +357,15 @@ export default function EligibilityChecker() {
                   <Button
                     size="lg"
                     className="w-full bg-[#d4a574] hover:bg-[#a67c52] text-[#1e3a5f] font-semibold"
-                    onClick={() => (window.location.href = "/#contact")}
+                    onClick={() => {
+                      window.location.href = "/";
+                      setTimeout(() => {
+                        const contactSection = document.getElementById("contact");
+                        if (contactSection) {
+                          contactSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }, 100);
+                    }}
                   >
                     צור קשר עכשיו <ArrowRight className="mr-2 h-5 w-5" />
                   </Button>
