@@ -250,10 +250,10 @@ export default function EligibilityChecker() {
                       className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
                     >
                       <option value="">בחר אפשרות</option>
-                      <option value="on-time">הטיסה המריאה בזמן</option>
                       <option value="cancelled">הטיסה בוטלה</option>
-                      <option value="advanced">הטיסה הוקדמה</option>
                       <option value="delayed">הטיסה המריאה באיחור</option>
+                      <option value="advanced">הטיסה הוקדמה</option>
+                      <option value="on-time">הטיסה המריאה בזמן</option>
                     </select>
                   </div>
 
