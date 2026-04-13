@@ -186,11 +186,9 @@ export default function EligibilityChecker() {
       }
     }
 
-    // Add deduction note if compensation was already received
+    // Store deduction note separately for display in compensation box
     if (eligibilityResult.compensation && hasCompensation) {
-      eligibilityResult.rights.push(
-        "אם קיבלתם כבר פיצוי, הסכום הסופי שמגיע לכם יהיה בניכוי הפיצוי שכבר התקבל"
-      );
+      eligibilityResult.deductionNote = "אם קיבלתם כבר פיצוי, הסכום הסופי שמגיע לכם יהיה בניכוי הפיצוי שכבר התקבל";
     }
 
     setResults(eligibilityResult);
@@ -384,6 +382,11 @@ export default function EligibilityChecker() {
                             ₪{results.compensation.min}-₪{results.compensation.max}
                           </p>
                           <p className="text-xs text-[#6b6b6b] mt-2">טווח פיצוי משוער</p>
+                          {results.deductionNote && (
+                            <p className="text-xs text-[#d4a574] mt-3 pt-3 border-t border-[#e8e7e5]">
+                              {results.deductionNote}
+                            </p>
+                          )}
                         </div>
                       )}
                     </CardContent>
