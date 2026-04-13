@@ -282,44 +282,31 @@ export default function EligibilityChecker() {
                       <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
                         מתי נודע לכם אודות השינוי? (בימים)
                       </label>
-                      <select
+                      <input
+                        type="number"
+                        min="0"
                         value={daysNotified}
                         onChange={(e) => setDaysNotified(e.target.value)}
+                        placeholder="הכניסו מספר ימים"
                         className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
-                      >
-                        <option value="">בחר אפשרות</option>
-                        <option value="0">0-14 ימים</option>
-                        <option value="15">15+ ימים</option>
-                      </select>
+                      />
                     </div>
                   )}
 
                   {/* Delay/Advance Hours (if delayed or advanced with 0-14 days) */}
-                  {daysNotified === "0" && (flightStatus === "delayed" || flightStatus === "advanced") && (
+                  {daysNotified !== "" && parseInt(daysNotified) <= 14 && (flightStatus === "delayed" || flightStatus === "advanced") && (
                     <div>
                       <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
                         {flightStatus === "delayed" ? "כמה שעות עיכוב?" : "כמה שעות הקדמה?"}
                       </label>
-                      <select
+                      <input
+                        type="number"
+                        min="0"
                         value={delayHours}
                         onChange={(e) => setDelayHours(e.target.value)}
+                        placeholder="הכניסו מספר שעות"
                         className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
-                      >
-                        <option value="">בחר אפשרות</option>
-                        {flightStatus === "delayed" && (
-                          <>
-                            <option value="2">2-5 שעות</option>
-                            <option value="5">5-8 שעות</option>
-                            <option value="8">8+ שעות</option>
-                          </>
-                        )}
-                        {flightStatus === "advanced" && (
-                          <>
-                            <option value="5">5-8 שעות</option>
-                            <option value="8">8+ שעות</option>
-                          </>
-                        )}
-                      </select>
+                      />
                     </div>
                   )}
 
