@@ -1,250 +1,357 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, XCircle, AlertCircle, ArrowRight } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, CheckCircle, AlertCircle, Info } from "lucide-react";
 import { useState } from "react";
 
-/**
- * Design Philosophy: Modern Legal Professionalism with Warmth
- * Interactive eligibility checker for aviation compensation claims
- * Compliant with Israeli Aviation Services Law (חוק שירותי תעופה תשע"ב-2012)
- * Provides immediate feedback on claim eligibility based on flight details
- */
-
-interface EligibilityResult {
-  eligible: boolean;
-  compensationRange: [number, number] | null;
-  reasons: string[];
-  conditions: string[];
-  delayCategory: "2-5" | "5-8" | "8plus" | "none";
-}
-
-const COMPENSATION_BY_DESTINATION = {
-  europe: { min: 1530, max: 2450 },
-  americas: { min: 2450, max: 3670 },
-  asia: { min: 2450, max: 3670 },
-  africa: { min: 1530, max: 2450 },
-  oceania: { min: 3670, max: 3670 },
-};
-
 export default function EligibilityChecker() {
-  const [formData, setFormData] = useState({
-    flightDate: "",
-    delayHours: "",
-    cancellationReason: "none",
-    flightDestination: "europe",
-    hasCompensation: false,
-    previousCompensation: "",
-  });
+  const [flightStatus, setFlightStatus] = useState("");
+  const [daysNotified, setDaysNotified] = useState("");
+  const [delayHours, setDelayHours] = useState("");
+  const [destination, setDestination] = useState("אירופה");
+  const [reasonForClaim, setReasonForClaim] = useState("");
+  const [hasCompensation, setHasCompensation] = useState(false);
+  const [results, setResults] = useState<any>(null);
 
-  const [result, setResult] = useState<EligibilityResult | null>(null);
-  const [showResult, setShowResult] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    }));
+  const getCompensationRange = (destination: string) => {
+    const ranges: { [key: string]: { min: number; max: number } } = {
+      "אירופה": { min: 1530, max: 2450 },
+      "אמריקה (צפון ודרום)": { min: 2450, max: 3670 },
+      "אסיה": { min: 2450, max: 3670 },
+      "אפריקה": { min: 1530, max: 2450 },
+      "אוקיאניה": { min: 3670, max: 3670 },
+    };
+    return ranges[destination] || { min: 1530, max: 2450 };
   };
 
-  const calculateEligibility = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowResult(false);
 
-    const delayHours = parseInt(formData.delayHours) || 0;
-    const flightDate = new Date(formData.flightDate);
-    const destination = formData.flightDestination as keyof typeof COMPENSATION_BY_DESTINATION;
-    const hasAlreadyCompensation = formData.hasCompensation;
-    const cancellationReason = formData.cancellationReason;
+    let eligibilityResult: any = {
+      isEligible: false,
+      message: "",
+      rights: [],
+      compensation: null,
+    };
 
-    let eligible = false;
-    let compensationRange: [number, number] | null = null;
-    let delayCategory: "2-5" | "5-8" | "8plus" | "none" = "none";
-    const reasons: string[] = [];
-    const conditions: string[] = [];
-
-    // Check if flight date is in the past
-    if (flightDate > new Date()) {
-      conditions.push("⚠️ בדיקה זו עבור טיסות שכבר התרחשו");
+    // Flight on time
+    if (flightStatus === "on-time") {
+      if (reasonForClaim === "overbooking") {
+        eligibilityResult = {
+          isEligible: true,
+          message: "אתה זכאי לפיצוי בגין סירוב להסיע נוסע",
+          rights: [
+            "שירותי סיוע (מזון, משקאות, תקשורת)",
+            "פיצוי כספי לפי חוק שירותי התעופה",
+          ],
+        };
+      } else if (reasonForClaim === "ticket-change") {
+        eligibilityResult = {
+          isEligible: true,
+          message: "אתה זכאי לפיצוי בגין שינוי בתנאי הכרטיס",
+          rights: [
+            "החזר על הפרש בתמורה או טיסה חלופית",
+            "שירותי סיוע אם היה עיכוב",
+          ],
+        };
+      } else if (reasonForClaim === "connection-change") {
+        eligibilityResult = {
+          isEligible: true,
+          message: "אתה זכאי לפיצוי בגין העברה מטיסה ישירה",
+          rights: [
+            "החזר על הפרש בתמורה או טיסה חלופית",
+            "שירותי סיוע אם היה עיכוב",
+          ],
+        };
+      }
     }
 
-    // Determine delay category and eligibility
-    if (delayHours >= 2 && delayHours < 5) {
-      delayCategory = "2-5";
-      eligible = true;
-      reasons.push("עיכוב של 2-5 שעות");
-      conditions.push("✅ אתם זכאים לשירותי סיוע (מזון, משקאות, תקשורת)");
-      conditions.push("💡 אם לא קיבלתם את השירותים הללו, כדאי ליצור קשר איתנו כדי לבדוק את זכויותיכם");
-    } else if (delayHours >= 5 && delayHours < 8) {
-      delayCategory = "5-8";
-      eligible = true;
-      reasons.push("עיכוב של 5-8 שעות");
-      conditions.push("✅ אתם זכאים ל:");
-      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
-      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
-      conditions.push("💡 אם לא קיבלתם את זכויותיכם, כדאי ליצור קשר איתנו");
-    } else if (delayHours >= 8) {
-      delayCategory = "8plus";
-      eligible = true;
-      reasons.push("עיכוב של 8 שעות או יותר (נחשב ביטול טיסה)");
-      const comp = COMPENSATION_BY_DESTINATION[destination];
-      compensationRange = [comp.min, comp.max];
-      conditions.push("✅ אתם זכאים ל:");
-      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
-      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
-      conditions.push(`  • פיצוי כספי בטווח של ₪${compensationRange[0].toLocaleString('he-IL')}-₪${compensationRange[1].toLocaleString('he-IL')}`);
+    // Flight cancelled
+    else if (flightStatus === "cancelled") {
+      if (daysNotified === "" || parseInt(daysNotified) > 14) {
+        eligibilityResult = {
+          isEligible: false,
+          message: "לא זכאי לפיצוי כספי",
+          rights: [
+            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+          ],
+        };
+      } else {
+        const range = getCompensationRange(destination);
+        eligibilityResult = {
+          isEligible: true,
+          message: "אתה זכאי לפיצוי מלא בגין ביטול טיסה",
+          rights: [
+            "שירותי סיוע (מזון, משקאות, תקשורת)",
+            "החזר על כרטיס הטיסה או טיסה חלופית",
+            `פיצוי כספי בטווח של ₪${range.min}-₪${range.max} (לפי יעד הטיסה)`,
+          ],
+          compensation: range,
+        };
+      }
     }
 
-    // Cancellation eligibility
-    if (cancellationReason === "cancelled") {
-      eligible = true;
-      delayCategory = "8plus";
-      reasons.push("ביטול טיסה");
-      const comp = COMPENSATION_BY_DESTINATION[destination];
-      compensationRange = [comp.min, comp.max];
-      conditions.push("✅ אתם זכאים ל:");
-      conditions.push("  • שירותי סיוע (מזון, משקאות, תקשורת)");
-      conditions.push("  • החזר על כרטיס הטיסה או טיסה חלופית");
-      conditions.push(`  • פיצוי כספי בטווח של ₪${compensationRange[0].toLocaleString('he-IL')}-₪${compensationRange[1].toLocaleString('he-IL')}`);
+    // Flight advanced
+    else if (flightStatus === "advanced") {
+      if (daysNotified === "" || parseInt(daysNotified) > 14) {
+        eligibilityResult = {
+          isEligible: false,
+          message: "לא זכאי לפיצוי כספי",
+          rights: [
+            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+          ],
+        };
+      } else {
+        if (delayHours === "" || parseInt(delayHours) < 5) {
+          eligibilityResult = {
+            isEligible: false,
+            message: "לא זכאי לפיצוי",
+            rights: [
+              "טיסה שהוקדמה בפחות מ-5 שעות אינה זכאית לפיצוי לפי החוק",
+            ],
+          };
+        } else if (parseInt(delayHours) >= 5 && parseInt(delayHours) < 8) {
+          eligibilityResult = {
+            isEligible: true,
+            message: "אתה זכאי לפיצוי בגין הקדמת טיסה",
+            rights: [
+              "החזר על כרטיס הטיסה או טיסה חלופית",
+            ],
+          };
+        } else {
+          const range = getCompensationRange(destination);
+          eligibilityResult = {
+            isEligible: true,
+            message: "אתה זכאי לפיצוי מלא בגין הקדמת טיסה",
+            rights: [
+              "החזר על כרטיס הטיסה או טיסה חלופית",
+              `פיצוי כספי בטווח של ₪${range.min}-₪${range.max} (לפי יעד הטיסה)`,
+            ],
+            compensation: range,
+          };
+        }
+      }
     }
 
-    // Already received compensation
-    if (hasAlreadyCompensation && (compensationRange || delayCategory === "5-8" || delayCategory === "2-5")) {
-      conditions.push("📌 אם קיבלתם כבר פיצוי, הסכום הסופי שמגיע לכם יהיה **בניכוי הפיצוי שכבר התקבל**");
+    // Flight delayed
+    else if (flightStatus === "delayed") {
+      if (daysNotified === "" || parseInt(daysNotified) > 14) {
+        eligibilityResult = {
+          isEligible: false,
+          message: "לא זכאי לפיצוי כספי",
+          rights: [
+            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+          ],
+        };
+      } else {
+        if (delayHours === "" || parseInt(delayHours) < 2) {
+          eligibilityResult = {
+            isEligible: false,
+            message: "לא זכאי לפיצוי",
+            rights: [
+              "עיכוב של פחות מ-2 שעות אינו זכאי לפיצוי לפי החוק",
+            ],
+          };
+        } else if (parseInt(delayHours) >= 2 && parseInt(delayHours) < 5) {
+          eligibilityResult = {
+            isEligible: true,
+            message: "אתה זכאי לשירותי סיוע",
+            rights: [
+              "שירותי סיוע (מזון, משקאות, תקשורת)",
+            ],
+          };
+        } else if (parseInt(delayHours) >= 5 && parseInt(delayHours) < 8) {
+          eligibilityResult = {
+            isEligible: true,
+            message: "אתה זכאי לשירותי סיוע והחזר",
+            rights: [
+              "שירותי סיוע (מזון, משקאות, תקשורת)",
+              "החזר על כרטיס הטיסה או טיסה חלופית",
+            ],
+          };
+        } else {
+          const range = getCompensationRange(destination);
+          eligibilityResult = {
+            isEligible: true,
+            message: "אתה זכאי לפיצוי מלא בגין עיכוב טיסה",
+            rights: [
+              "שירותי סיוע (מזון, משקאות, תקשורת)",
+              "החזר על כרטיס הטיסה או טיסה חלופית",
+              `פיצוי כספי בטווח של ₪${range.min}-₪${range.max} (לפי יעד הטיסה)`,
+            ],
+            compensation: range,
+          };
+        }
+      }
     }
 
-    // No eligibility
-    if (!eligible) {
-      conditions.push("❌ על פי הנתונים שלך, אתה אולי לא זכאי לפיצוי");
-      conditions.push("💡 עם זאת, כל מקרה הוא ייחודי - צור קשר לייעוץ חינם");
+    // Add deduction note if compensation was already received
+    if (eligibilityResult.compensation && hasCompensation) {
+      eligibilityResult.rights.push(
+        "אם קיבלתם כבר פיצוי, הסכום הסופי שמגיע לכם יהיה בניכוי הפיצוי שכבר התקבל"
+      );
     }
 
-    setResult({
-      eligible,
-      compensationRange,
-      reasons,
-      conditions,
-      delayCategory,
-    });
-
-    setTimeout(() => setShowResult(true), 300);
+    setResults(eligibilityResult);
   };
 
   return (
     <div className="min-h-screen bg-[#f9f8f6] text-[#2d2d2d]" dir="rtl">
-      {/* Navigation Header */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-[#e8e7e5]">
         <div className="container flex items-center justify-between py-4">
-          <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-[#1e3a5f] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">⚖️</span>
             </div>
-            <h1 className="text-xl font-bold text-[#1e3a5f]">עורך דין תביעות תעופה</h1>
-          </a>
-          <Button
-            variant="outline"
-            className="border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
-            onClick={() => window.location.href = "/"}
+            <h1 className="text-xl font-bold text-[#1e3a5f]">ליעד גרשון עו"ד (רו"ח)</h1>
+          </div>
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="px-4 py-2 text-[#1e3a5f] hover:bg-[#f0f0f0] rounded transition-colors"
           >
             חזור לעמוד הבית
-          </Button>
+          </button>
         </div>
       </header>
 
       {/* Main Content */}
-      <section className="py-16 md:py-24">
-        <div className="container max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] mb-4">
-              בדוק את הזכאות שלך לפיצוי
-            </h1>
-            <p className="text-lg text-[#6b6b6b]">
-              מלא את פרטי הטיסה שלך וקבל תשובה מיידית אם אתה זכאי לפיצוי לפי חוק שירותי התעופה הישראלי
-            </p>
-          </div>
+      <div className="container py-12">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-[#1e3a5f] mb-4 text-center">
+            בדוק את הזכאות שלך לפיצוי
+          </h1>
+          <p className="text-center text-[#6b6b6b] mb-12">
+            מלא את פרטי הטיסה שלך וקבל תשובה מיידית אם אתה זכאי לפיצוי לפי חוק שירותי התעופה הישראלי
+          </p>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Form */}
-            <Card className="border-[#e8e7e5] bg-white h-fit">
+            <Card className="border-[#e8e7e5]">
               <CardHeader>
                 <CardTitle className="text-[#1e3a5f]">פרטי הטיסה</CardTitle>
-                <CardDescription>
-                  מלא את המידע הבא לבדיקה מהירה
-                </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={calculateEligibility} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Flight Status */}
                   <div>
-                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      תאריך הטיסה
-                    </label>
-                    <input
-                      type="date"
-                      name="flightDate"
-                      value={formData.flightDate}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      לאן הטיסה הייתה?
+                    <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                      מה היה סטטוס הטיסה?
                     </label>
                     <select
-                      name="flightDestination"
-                      value={formData.flightDestination}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
+                      value={flightStatus}
+                      onChange={(e) => {
+                        setFlightStatus(e.target.value);
+                        setDaysNotified("");
+                        setDelayHours("");
+                        setReasonForClaim("");
+                      }}
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
                     >
-                      <option value="europe">אירופה</option>
-                      <option value="americas">אמריקה (צפון ודרום)</option>
-                      <option value="asia">אסיה</option>
-                      <option value="africa">אפריקה</option>
-                      <option value="oceania">אוקיאניה</option>
+                      <option value="">בחר אפשרות</option>
+                      <option value="on-time">הטיסה המריאה בזמן</option>
+                      <option value="cancelled">הטיסה בוטלה</option>
+                      <option value="advanced">הטיסה הוקדמה</option>
+                      <option value="delayed">הטיסה המריאה באיחור</option>
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      שעות עיכוב (אם היה)
-                    </label>
-                    <input
-                      type="number"
-                      name="delayHours"
-                      value={formData.delayHours}
-                      onChange={handleInputChange}
-                      placeholder="0"
-                      min="0"
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
-                    />
-                  </div>
+                  {/* Reason for Claim (if on-time) */}
+                  {flightStatus === "on-time" && (
+                    <div>
+                      <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                        מה סיבת הפניה?
+                      </label>
+                      <select
+                        value={reasonForClaim}
+                        onChange={(e) => setReasonForClaim(e.target.value)}
+                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                      >
+                        <option value="">בחר אפשרות</option>
+                        <option value="overbooking">סירוב להסיע נוסע (overbooking)</option>
+                        <option value="ticket-change">שינוי בתנאי כרטיס הטיסה</option>
+                        <option value="connection-change">העברה מטיסה ישירה לטיסה עם עצירת ביניים</option>
+                      </select>
+                    </div>
+                  )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                      האם הטיסה בוטלה?
-                    </label>
-                    <select
-                      name="cancellationReason"
-                      value={formData.cancellationReason}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d]"
-                    >
-                      <option value="none">בחר אפשרות</option>
-                      <option value="cancelled">הטיסה בוטלה, ולא טסתי כלל</option>
-                      <option value="delayed">הטיסה המריאה באיחור, אבל כן טסתי</option>
-                      <option value="late_departure">הטיסה המריאה באיחור, אבל לא טסתי</option>
-                    </select>
-                  </div>
+                  {/* Days Notified (if cancelled, advanced, or delayed) */}
+                  {(flightStatus === "cancelled" || flightStatus === "advanced" || flightStatus === "delayed") && (
+                    <div>
+                      <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                        מתי נודע לכם אודות השינוי? (בימים)
+                      </label>
+                      <select
+                        value={daysNotified}
+                        onChange={(e) => setDaysNotified(e.target.value)}
+                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                      >
+                        <option value="">בחר אפשרות</option>
+                        <option value="0">0-14 ימים</option>
+                        <option value="15">15+ ימים</option>
+                      </select>
+                    </div>
+                  )}
 
-                  <div className="flex items-center gap-2 pt-2">
+                  {/* Delay/Advance Hours (if delayed or advanced with 0-14 days) */}
+                  {daysNotified === "0" && (flightStatus === "delayed" || flightStatus === "advanced") && (
+                    <div>
+                      <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                        {flightStatus === "delayed" ? "כמה שעות עיכוב?" : "כמה שעות הקדמה?"}
+                      </label>
+                      <select
+                        value={delayHours}
+                        onChange={(e) => setDelayHours(e.target.value)}
+                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                      >
+                        <option value="">בחר אפשרות</option>
+                        {flightStatus === "delayed" && (
+                          <>
+                            <option value="2">2-5 שעות</option>
+                            <option value="5">5-8 שעות</option>
+                            <option value="8">8+ שעות</option>
+                          </>
+                        )}
+                        {flightStatus === "advanced" && (
+                          <>
+                            <option value="5">5-8 שעות</option>
+                            <option value="8">8+ שעות</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Destination (if eligible for compensation) */}
+                  {((flightStatus === "cancelled" && daysNotified === "0") ||
+                    (flightStatus === "delayed" && delayHours === "8") ||
+                    (flightStatus === "advanced" && delayHours === "8")) && (
+                    <div>
+                      <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                        לאן הטיסה הייתה?
+                      </label>
+                      <select
+                        value={destination}
+                        onChange={(e) => setDestination(e.target.value)}
+                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                      >
+                        <option value="אירופה">אירופה</option>
+                        <option value="אמריקה (צפון ודרום)">אמריקה (צפון ודרום)</option>
+                        <option value="אסיה">אסיה</option>
+                        <option value="אפריקה">אפריקה</option>
+                        <option value="אוקיאניה">אוקיאניה</option>
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Compensation Received */}
+                  <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
                       id="hasCompensation"
-                      name="hasCompensation"
-                      checked={formData.hasCompensation}
-                      onChange={handleInputChange}
+                      checked={hasCompensation}
+                      onChange={(e) => setHasCompensation(e.target.checked)}
                       className="w-4 h-4 rounded border-[#e8e7e5]"
                     />
                     <label htmlFor="hasCompensation" className="text-sm text-[#6b6b6b]">
@@ -252,25 +359,11 @@ export default function EligibilityChecker() {
                     </label>
                   </div>
 
-                  {formData.hasCompensation && (
-                    <div className="mt-4">
-                      <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
-                        סכום הפיצוי שקיבלתי (בשקלים חדשים)
-                      </label>
-                      <input
-                        type="number"
-                        name="previousCompensation"
-                        value={formData.previousCompensation}
-                        onChange={handleInputChange}
-                        placeholder="הכנס את הסכום שקיבלתי"
-                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] bg-white text-[#2d2d2d] text-right"
-                      />
-                    </div>
-                  )}
-
+                  {/* Submit Button */}
                   <Button
                     type="submit"
-                    className="w-full bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white font-semibold py-2 mt-6"
+                    size="lg"
+                    className="w-full bg-[#1e3a5f] hover:bg-[#152a47] text-white font-semibold"
                   >
                     בדוק את הזכאות שלי
                   </Button>
@@ -280,72 +373,47 @@ export default function EligibilityChecker() {
 
             {/* Results */}
             <div>
-              {showResult && result && (
-                <div className={`space-y-4 animate-in fade-in duration-300`}>
-                  {/* Eligibility Status */}
-                  <Card
-                    className={`border-2 ${
-                      result.eligible
-                        ? "border-[#d4a574] bg-[#d4a574]/5"
-                        : "border-[#d32f2f] bg-[#d32f2f]/5"
-                    }`}
-                  >
+              {results ? (
+                <div className="space-y-4">
+                  {/* Main Result Card */}
+                  <Card className={`border-2 ${results.isEligible ? "border-[#8b9d83] bg-[#f0f5f2]" : "border-[#e8a87c] bg-[#faf5f0]"}`}>
                     <CardHeader>
-                      <div className="flex items-center gap-3">
-                        {result.eligible ? (
-                          <CheckCircle2 className="w-8 h-8 text-[#d4a574]" />
+                      <div className="flex items-center gap-2">
+                        {results.isEligible ? (
+                          <CheckCircle className="w-6 h-6 text-[#8b9d83]" />
                         ) : (
-                          <AlertCircle className="w-8 h-8 text-[#d32f2f]" />
+                          <AlertCircle className="w-6 h-6 text-[#d4a574]" />
                         )}
-                        <CardTitle className={result.eligible ? "text-[#d4a574]" : "text-[#d32f2f]"}>
-                          {result.eligible ? "אתה כנראה זכאי!" : "בדוק עם עורך דין"}
+                        <CardTitle className={results.isEligible ? "text-[#8b9d83]" : "text-[#d4a574]"}>
+                          {results.isEligible ? "אתה כנראה זכאי!" : "אתה לא זכאי כרגע"}
                         </CardTitle>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      {result.compensationRange && (
-                        <div className="text-2xl font-bold text-[#1e3a5f] mb-2">
-                          ₪{result.compensationRange[0].toLocaleString('he-IL')}-₪{result.compensationRange[1].toLocaleString('he-IL')}
+                      <p className="text-sm font-medium text-[#1e3a5f] mb-4">{results.message}</p>
+                      {results.compensation && (
+                        <div className="bg-white rounded-lg p-4 mb-4 border border-[#e8e7e5]">
+                          <p className="text-2xl font-bold text-[#1e3a5f]">
+                            ₪{results.compensation.min}-₪{results.compensation.max}
+                          </p>
+                          <p className="text-xs text-[#6b6b6b] mt-2">טווח פיצוי משוער</p>
                         </div>
                       )}
-                      <p className="text-[#6b6b6b]">
-                        {result.eligible
-                          ? "על פי הנתונים שלך, אתה זכאי לפיצוי או שירותי סיוע"
-                          : "אנא צור קשר לייעוץ חינם"}
-                      </p>
                     </CardContent>
                   </Card>
 
-                  {/* Reasons */}
-                  {result.reasons.length > 0 && (
+                  {/* Rights Card */}
+                  {results.rights.length > 0 && (
                     <Card className="border-[#e8e7e5]">
                       <CardHeader>
-                        <CardTitle className="text-[#1e3a5f] text-lg">הסיבות</CardTitle>
+                        <CardTitle className="text-[#1e3a5f] text-lg">הזכויות שלך</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <ul className="space-y-2">
-                          {result.reasons.map((reason, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-[#6b6b6b]">
-                              <CheckCircle2 className="w-5 h-5 text-[#d4a574] flex-shrink-0 mt-0.5" />
-                              <span>{reason}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {/* Conditions */}
-                  {result.conditions.length > 0 && (
-                    <Card className="border-[#e8e7e5] bg-[#1e3a5f] text-white">
-                      <CardHeader>
-                        <CardTitle className="text-white text-lg">הצעדים הבאים</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-2">
-                          {result.conditions.map((condition, idx) => (
-                            <li key={idx} className="text-[#e8e7e5] whitespace-pre-wrap">
-                              {condition}
+                        <ul className="space-y-3">
+                          {results.rights.map((right: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <CheckCircle className="w-5 h-5 text-[#8b9d83] flex-shrink-0 mt-0.5" />
+                              <span className="text-sm text-[#6b6b6b]">{right}</span>
                             </li>
                           ))}
                         </ul>
@@ -370,34 +438,20 @@ export default function EligibilityChecker() {
                     צור קשר עכשיו <ArrowRight className="mr-2 h-5 w-5" />
                   </Button>
                 </div>
-              )}
-
-              {!showResult && (
-                <Card className="border-[#e8e7e5] bg-gradient-to-br from-[#1e3a5f]/5 to-[#d4a574]/5">
-                  <CardContent className="pt-12 text-center">
-                    <AlertCircle className="w-12 h-12 text-[#d4a574] mx-auto mb-4" />
-                    <p className="text-[#6b6b6b] mb-4">
-                      מלא את פרטי הטיסה שלך כדי לקבל תוצאות בדיקה
-                    </p>
-                    <p className="text-sm text-[#8b9d83]">
-                      זו בדיקה מהירה בלבד. התוצאה הסופית תידרש אישור משפטי.
+              ) : (
+                <Card className="border-[#e8e7e5] bg-[#f9f8f6]">
+                  <CardContent className="pt-8 text-center">
+                    <Info className="w-12 h-12 text-[#d4a574] mx-auto mb-4" />
+                    <p className="text-[#6b6b6b]">
+                      מלא את פרטי הטיסה שלך בצד שמאל וקבל תשובה מיידית
                     </p>
                   </CardContent>
                 </Card>
               )}
             </div>
           </div>
-
-
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#1e3a5f] text-white py-12 border-t border-[#2d5a8c] mt-16">
-        <div className="container text-center text-sm text-[#e8e7e5]">
-          <p>&copy; 2026 עורך דין תביעות תעופה. כל הזכויות שמורות.</p>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
