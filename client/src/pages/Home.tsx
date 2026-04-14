@@ -448,9 +448,9 @@ export default function Home() {
             <div>
               <h3 className="font-bold text-lg mb-4">שירותים</h3>
               <ul className="space-y-2 text-sm text-[#e8e7e5]">
-                <li><a href="#" className="hover:text-[#d4a574]">תביעות ביטול</a></li>
-                <li><a href="#" className="hover:text-[#d4a574]">תביעות עיכוב</a></li>
-                <li><a href="#" className="hover:text-[#d4a574]">ייעוץ משפטי</a></li>
+                <li><a href="/#services" className="hover:text-[#d4a574]">תביעות ביטול</a></li>
+                <li><a href="/#services" className="hover:text-[#d4a574]">תביעות עיכוב</a></li>
+                <li><a href="/eligibility" className="hover:text-[#d4a574]">מחשבון זכויות</a></li>
               </ul>
             </div>
             <div>
