@@ -41,7 +41,10 @@ export default function Home() {
             <div className="w-10 h-10 bg-[#1e3a5f] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">⚖️</span>
             </div>
-            <h1 className="text-xl font-bold text-[#1e3a5f]">ליעד גרשון עו"ד (רו"ח)</h1>
+            <div>
+              <h1 className="text-xl font-bold text-[#1e3a5f]">ליעד גרשון עו"ד (רו"ח)</h1>
+              <p className="text-sm text-[#6b6b6b] mt-1">מומחה לתביעות תעופה וזכויות נוסעים</p>
+            </div>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <a href="#services" className="text-[#2d2d2d] hover:text-[#d4a574] transition-colors">
