@@ -13,6 +13,8 @@ export default function EligibilityChecker() {
   const [reasonForClaim, setReasonForClaim] = useState("");
   const [hasCompensation, setHasCompensation] = useState(false);
   const [results, setResults] = useState<any>(null);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "" });
 
   const getCompensationRange = (destination: string) => {
     const ranges: { [key: string]: { min: number; max: number } } = {
@@ -192,6 +194,23 @@ export default function EligibilityChecker() {
     }
 
     setResults(eligibilityResult);
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would send the form data along with the results
+    console.log({
+      flightStatus,
+      daysNotified,
+      delayHours,
+      destination,
+      reasonForClaim,
+      hasCompensation,
+      results,
+      contact: contactForm,
+    });
+    // For now, just close the modal
+    setShowContactModal(false);
   };
 
   return (
@@ -415,15 +434,7 @@ export default function EligibilityChecker() {
                   <Button
                     size="lg"
                     className="w-full bg-[#d4a574] hover:bg-[#a67c52] text-[#1e3a5f] font-semibold"
-                    onClick={() => {
-                      window.location.href = "/";
-                      setTimeout(() => {
-                        const contactSection = document.getElementById("contact");
-                        if (contactSection) {
-                          contactSection.scrollIntoView({ behavior: "smooth" });
-                        }
-                      }, 100);
-                    }}
+                    onClick={() => setShowContactModal(true)}
                   >
                     צור קשר עכשיו <ArrowRight className="mr-2 h-5 w-5" />
                   </Button>
@@ -442,6 +453,87 @@ export default function EligibilityChecker() {
           </div>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      {showContactModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" dir="rtl">
+          <Card className="w-full max-w-md bg-white border-[#e8e7e5] shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-[#1e3a5f]">פרטי יצירת קשר</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                {/* Summary Section */}
+                <div className="bg-[#f9f8f6] p-4 rounded-lg mb-4 text-sm">
+                  <p className="font-semibold text-[#1e3a5f] mb-2">סיכום הפרטים:</p>
+                  <ul className="space-y-1 text-[#6b6b6b] text-xs">
+                    <li>• סטטוס טיסה: {flightStatus === "cancelled" ? "בוטלה" : flightStatus === "delayed" ? "עיכוב" : flightStatus === "advanced" ? "הקדמה" : "בזמן"}</li>
+                    {daysNotified && <li>• ימים לפני: {daysNotified}</li>}
+                    {delayHours && <li>• שעות: {delayHours}</li>}
+                    <li>• יעד: {destination}</li>
+                    {results?.compensation && <li>• טווח פיצוי: ₪{results.compensation.min}-₪{results.compensation.max}</li>}
+                  </ul>
+                </div>
+
+                {/* Contact Form Fields */}
+                <div>
+                  <label className="block text-sm font-medium text-[#1e3a5f] mb-2">שם מלא *</label>
+                  <input
+                    type="text"
+                    required
+                    value={contactForm.name}
+                    onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                    placeholder="הכניסו שם מלא"
+                    className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#1e3a5f] mb-2">מספר טלפון *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={contactForm.phone}
+                    onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                    placeholder="הכניסו מספר טלפון"
+                    className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#1e3a5f] mb-2">דוא"ל *</label>
+                  <input
+                    type="email"
+                    required
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                    placeholder="הכניסו דוא״ל"
+                    className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                  />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    type="submit"
+                    className="flex-1 bg-[#d4a574] hover:bg-[#a67c52] text-[#1e3a5f] font-semibold"
+                  >
+                    שלח
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1 border-[#e8e7e5] text-[#1e3a5f]"
+                    onClick={() => setShowContactModal(false)}
+                  >
+                    ביטול
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
