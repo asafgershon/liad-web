@@ -253,6 +253,24 @@ export default function EligibilityChecker() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Destination - First Question */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
+                      לאן הטיסה הייתה?
+                    </label>
+                    <select
+                      value={destination}
+                      onChange={(e) => setDestination(e.target.value)}
+                      className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                    >
+                      <option value="אירופה">אירופה</option>
+                      <option value="אמריקה (צפון ודרום)">אמריקה (צפון ודרום)</option>
+                      <option value="אסיה">אסיה</option>
+                      <option value="אפריקה">אפריקה</option>
+                      <option value="אוקיאניה">אוקיאניה</option>
+                    </select>
+                  </div>
+
                   {/* Flight Status */}
                   <div>
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
@@ -329,27 +347,7 @@ export default function EligibilityChecker() {
                     </div>
                   )}
 
-                  {/* Destination (if eligible for compensation) */}
-                  {((flightStatus === "cancelled" && daysNotified === "0") ||
-                    (flightStatus === "delayed" && delayHours === "8") ||
-                    (flightStatus === "advanced" && delayHours === "8")) && (
-                    <div>
-                      <label className="block text-sm font-medium text-[#1e3a5f] mb-2">
-                        לאן הטיסה הייתה?
-                      </label>
-                      <select
-                        value={destination}
-                        onChange={(e) => setDestination(e.target.value)}
-                        className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
-                      >
-                        <option value="אירופה">אירופה</option>
-                        <option value="אמריקה (צפון ודרום)">אמריקה (צפון ודרום)</option>
-                        <option value="אסיה">אסיה</option>
-                        <option value="אפריקה">אפריקה</option>
-                        <option value="אוקיאניה">אוקיאניה</option>
-                      </select>
-                    </div>
-                  )}
+
 
                   {/* Compensation Received */}
                   <div className="flex items-center gap-2">
