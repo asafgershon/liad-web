@@ -76,9 +76,9 @@ export default function EligibilityChecker() {
       if (daysNotified === "" || parseInt(daysNotified) > 14) {
         eligibilityResult = {
           isEligible: false,
-          message: "לא זכאי לפיצוי כספי",
+          message: "לפי הנתונים שהוזנו, לא נמצאה זכאות לפיצוי מידי",
           rights: [
-            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+            "עם זאת, ייתכן שמגיעות לך זכויות נוספות שלא נבדקו במחשבון. כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך.",
           ],
         };
       } else {
@@ -101,9 +101,9 @@ export default function EligibilityChecker() {
       if (daysNotified === "" || parseInt(daysNotified) > 14) {
         eligibilityResult = {
           isEligible: false,
-          message: "לא זכאי לפיצוי כספי",
+          message: "לפי הנתונים שהוזנו, לא נמצאה זכאות לפיצוי מידי",
           rights: [
-            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+            "עם זאת, ייתכן שמגיעות לך זכויות נוספות שלא נבדקו במחשבון. כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך.",
           ],
         };
       } else {
@@ -143,9 +143,9 @@ export default function EligibilityChecker() {
       if (daysNotified === "" || parseInt(daysNotified) > 14) {
         eligibilityResult = {
           isEligible: false,
-          message: "לא זכאי לפיצוי כספי",
+          message: "לפי הנתונים שהוזנו, לא נמצאה זכאות לפיצוי מידי",
           rights: [
-            "עם זאת, כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך",
+            "עם זאת, ייתכן שמגיעות לך זכויות נוספות שלא נבדקו במחשבון. כדאי ליצור קשר איתנו לבדיקה פרטנית של המקרה שלך.",
           ],
         };
       } else {
