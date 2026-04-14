@@ -14,7 +14,7 @@ export default function EligibilityChecker() {
   const [hasCompensation, setHasCompensation] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [showContactModal, setShowContactModal] = useState(false);
-  const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "" });
+  const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "", notes: "" });
 
   const getCompensationRange = (destination: string) => {
     const ranges: { [key: string]: { min: number; max: number } } = {
@@ -514,6 +514,18 @@ export default function EligibilityChecker() {
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     placeholder="הכניסו דוא״ל"
                     className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#1e3a5f] mb-2">הערות נוספות</label>
+                  <textarea
+                    dir="rtl"
+                    value={contactForm.notes}
+                    onChange={(e) => setContactForm({ ...contactForm, notes: e.target.value })}
+                    placeholder="הוסיפו כל מלל נוסף או סיפור קטן על המקרה שלכם"
+                    rows={4}
+                    className="w-full px-4 py-2 border border-[#e8e7e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4a574] resize-none"
                   />
                 </div>
 
