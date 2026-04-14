@@ -481,6 +481,7 @@ export default function EligibilityChecker() {
                   <input
                     type="text"
                     required
+                    dir="rtl"
                     value={contactForm.name}
                     onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                     placeholder="הכניסו שם מלא"
@@ -493,6 +494,7 @@ export default function EligibilityChecker() {
                   <input
                     type="tel"
                     required
+                    dir="rtl"
                     value={contactForm.phone}
                     onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
                     placeholder="הכניסו מספר טלפון"
@@ -505,6 +507,7 @@ export default function EligibilityChecker() {
                   <input
                     type="email"
                     required
+                    dir="rtl"
                     value={contactForm.email}
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     placeholder="הכניסו דוא״ל"
