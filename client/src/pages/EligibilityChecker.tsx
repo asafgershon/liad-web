@@ -459,7 +459,7 @@ export default function EligibilityChecker() {
       {/* Contact Modal */}
       {showContactModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" dir="rtl">
-          <Card className="w-full max-w-md bg-white border-[#e8e7e5] shadow-lg">
+          <Card className="w-full max-w-md bg-white border-[#e8e7e5] shadow-lg max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#1e3a5f]">פרטי יצירת קשר</CardTitle>
             </CardHeader>
