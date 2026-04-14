@@ -61,10 +61,11 @@ export default function EligibilityChecker() {
       } else if (reasonForClaim === "connection-change") {
         eligibilityResult = {
           isEligible: true,
-          message: "אתה זכאי לפיצוי בגין העברה מטיסה ישירה",
+          message: "הטיסה שלך שונתה מטיסה ישירה לטיסה עם עצירת ביניים, ייתכן שמדובר בשינוי המזכה בפיצוי",
           rights: [
             "החזר על הפרש בתמורה או טיסה חלופית",
             "שירותי סיוע אם היה עיכוב",
+            "פיצוי נוסף בהתאם למשך העיכוב",
           ],
         };
       }
