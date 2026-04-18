@@ -15,6 +15,23 @@
   </head>
 
   <body dir="rtl">
+    <!-- Hidden forms for Netlify Forms detection at build time -->
+    <form name="contact" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="flightDetails"></textarea>
+    </form>
+    <form name="eligibility-contact" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="notes"></textarea>
+      <input type="text" name="flightStatus" />
+      <input type="text" name="destination" />
+      <input type="text" name="daysNotified" />
+      <input type="text" name="delayHours" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script

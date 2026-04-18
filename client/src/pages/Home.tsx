@@ -25,11 +25,26 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // TODO: Connect to backend or email service
-    alert("תודה על פנייתך! נחזור אליך בהקדם.");
+    setFormSubmitting(true);
+    const form = e.target as HTMLFormElement;
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form) as any).toString(),
+      });
+      setFormSubmitted(true);
+      setFormData({ name: "", phone: "", email: "", flightDetails: "" });
+    } catch {
+      alert("אירעה שגיאה, נסה שנית או צור קשר ישירות.");
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (
@@ -365,7 +380,17 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {formSubmitted ? (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-[#8b9d83]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle2 className="w-8 h-8 text-[#8b9d83]" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">תודה על פנייתך!</h3>
+                    <p className="text-[#6b6b6b]">נחזור אליך בהקדם האפשרי.</p>
+                  </div>
+                ) : (
+                <form onSubmit={handleSubmit} className="space-y-4" name="contact" data-netlify="true">
+                  <input type="hidden" name="form-name" value="contact" />
                   <div>
                     <label className="block text-sm font-medium text-[#2d2d2d] mb-2">
                       שם מלא
@@ -427,11 +452,13 @@ export default function Home() {
 
                   <Button
                     type="submit"
+                    disabled={formSubmitting}
                     className="w-full bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white font-semibold py-2"
                   >
-                    שלח בקשה
+                    {formSubmitting ? "שולח..." : "שלח בקשה"}
                   </Button>
                 </form>
+                )}
               </CardContent>
             </Card>
           </div>

@@ -15,6 +15,8 @@ export default function EligibilityChecker() {
   const [results, setResults] = useState<any>(null);
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "", notes: "" });
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactSubmitting, setContactSubmitting] = useState(false);
 
   const getCompensationRange = (destination: string) => {
     const ranges: { [key: string]: { min: number; max: number } } = {
@@ -198,21 +200,32 @@ export default function EligibilityChecker() {
     setResults(eligibilityResult);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would send the form data along with the results
-    console.log({
-      flightStatus,
-      daysNotified,
-      delayHours,
-      destination,
-      reasonForClaim,
-      hasCompensation,
-      results,
-      contact: contactForm,
-    });
-    // For now, just close the modal
-    setShowContactModal(false);
+    setContactSubmitting(true);
+    try {
+      const body = new URLSearchParams({
+        "form-name": "eligibility-contact",
+        name: contactForm.name,
+        phone: contactForm.phone,
+        email: contactForm.email,
+        notes: contactForm.notes,
+        flightStatus,
+        destination,
+        daysNotified,
+        delayHours,
+      }).toString();
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+      setContactSubmitted(true);
+    } catch {
+      alert("אירעה שגיאה, נסה שנית.");
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   return (
@@ -462,7 +475,19 @@ export default function EligibilityChecker() {
               <CardTitle className="text-[#1e3a5f]">פרטי יצירת קשר</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleContactSubmit} className="space-y-4">
+              {contactSubmitted ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-[#8b9d83]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-[#8b9d83]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">תודה על פנייתך!</h3>
+                  <p className="text-[#6b6b6b] mb-6">נחזור אליך בהקדם האפשרי.</p>
+                  <Button onClick={() => setShowContactModal(false)} className="bg-[#1e3a5f] text-white">
+                    סגור
+                  </Button>
+                </div>
+              ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-4" name="eligibility-contact" data-netlify="true">
                 {/* Summary Section */}
                 <div className="bg-[#f9f8f6] p-4 rounded-lg mb-4 text-sm">
                   <p className="font-semibold text-[#1e3a5f] mb-2">סיכום הפרטים:</p>
@@ -533,7 +558,7 @@ export default function EligibilityChecker() {
                     type="submit"
                     className="flex-1 bg-[#d4a574] hover:bg-[#a67c52] text-[#1e3a5f] font-semibold"
                   >
-                    שלח
+                    {contactSubmitting ? "שולח..." : "שלח"}
                   </Button>
                   <Button
                     type="button"
@@ -545,6 +570,7 @@ export default function EligibilityChecker() {
                   </Button>
                 </div>
               </form>
+              )}
             </CardContent>
           </Card>
         </div>
