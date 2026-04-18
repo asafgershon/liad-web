@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, Phone, Mail, MapPin, ArrowRight, FileText, Clock, DollarSign, FileCheck, Search, Lightbulb, CheckCircle, Luggage } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "wouter";
 
 /**
  * Design Philosophy: Modern Legal Professionalism with Warmth
@@ -13,6 +14,7 @@ import { useState } from "react";
  */
 
 export default function Home() {
+  const [, navigate] = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -92,7 +94,7 @@ export default function Home() {
                 עם ניסיון של שנים בדיני תעופה, אנו מבטיחים את זכויותיך.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white text-base" onClick={() => window.location.href = '/eligibility'}>
+                <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d5a8c] text-white text-base" onClick={() => navigate('/eligibility')}>
                   בדוק את הזכאות שלך <ArrowRight className="mr-2 h-5 w-5" />
                 </Button>
 
